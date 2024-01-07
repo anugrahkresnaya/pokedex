@@ -15,6 +15,7 @@ onMounted(async () => {
     lists.value.forEach(async item => {
       let response = await axios.get(POKEMON_LIST_API + `/${item.name}`)
       pokemonList.value.push(response)
+      pokemonList.value.sort((a, b) => a.data.id - b.data.id)
     });
   } catch (error) {
     console.log('error while fetching api', error)
@@ -24,10 +25,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <div class="">
     <h1 class="mb-10">pokemon list</h1>
     <ul class="flex flex-wrap justify-center">
-      <li v-for="(item, index) in pokemonList" :key="index" class="bg-red-400 hover:shadow-lg rounded-lg w-40 mx-2 mb-10">
+      <li v-for="(item, index) in pokemonList" :key="index" class="bg-deep-violet hover:shadow-lg rounded-lg w-40 mx-2 mb-10">
         <RouterLink :to='`pokemon/${item.data.name}`'>
           <img 
             :src="item.data.sprites.other['official-artwork']['front_default']" 
